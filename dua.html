@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dua in Islam</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dua.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dua in Islam</h1>
+        <p>Dua (supplication) is a significant act of worship in Islam, representing a personal conversation with Allah. It encompasses requests, praises, and expressions of gratitude, reflecting a believer's dependence on and trust in Allah.</p>
+        <h2>Importance of Dua</h2>
+        <p>Dua is a powerful way for Muslims to communicate with Allah, seek guidance, and ask for help. It signifies a believer's submission and reliance on Allah's wisdom and mercy.</p>
+
+        <h2>Common Duas</h2>
+        <div class="button-container">
+            <button onclick="showDua('health')">For Health</button>
+            <button onclick="showDua('forgiveness')">For Forgiveness</button>
+            <button onclick="showDua('wealth')">For Wealth</button>
+            <button onclick="showDua('strength')">For Strength</button>
+            <button onclick="showDua('beauty')">For Beauty</button>
+            <button onclick="showDua('safety')">For Safety</button>
+            <button onclick="showDua('parents')">For Parents</button>
+            <button onclick="showDua('children')">For Children</button>
+            <button onclick="showDua('friends')">For Friends</button>
+            <button onclick="showDua('family')">For Family</button>
+        </div>
+
+        <div id="dua-content">
+            
+        </div>
+
+        <div class="center-button">
+            <button onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        function showDua(type) {
+            const duaContent = {
+                health: `
+                    <h3>For Health</h3>
+                    <p class="arabic">اللَّهُمَّ اشْفِني</p>
+                    <p class="transliteration">"Allahumma ishfini"</p>
+                    <p>"O Allah, heal me."</p>
+                `,
+                forgiveness: `
+                    <h3>For Forgiveness</h3>
+                    <p class="arabic">رَبِّ اغْفِرْ لِي وَارْحَمْنِي</p>
+                    <p class="transliteration">"Rabbi ighfir li warhamni"</p>
+                    <p>"My Lord, forgive me and have mercy on me."</p>
+                `,
+                wealth: `
+                    <h3>For Wealth</h3>
+                    <p class="arabic">اللَّهُمَّ ارزُقني</p>
+                    <p class="transliteration">"Allahumma arzuqni"</p>
+                    <p>"O Allah, provide for me."</p>
+                `,
+                strength: `
+                    <h3>For Strength</h3>
+                    <p class="arabic">رَبِّ اشْرَحْ لِي صَدْرِي</p>
+                    <p class="transliteration">"Rabbi ishrah li sadri"</p>
+                    <p>"My Lord, expand for me my chest."</p>
+                `,
+                beauty: `
+                    <h3>For Beauty</h3>
+                    <p class="arabic">اللَّهُمَّ اجْمِلْنِي</p>
+                    <p class="transliteration">"Allahumma ajmilni"</p>
+                    <p>"O Allah, make me beautiful."</p>
+                `,
+                safety: `
+                    <h3>For Safety</h3>
+                    <p class="arabic">اللَّهُمَّ احْفَظْنِي</p>
+                    <p class="transliteration">"Allahumma ihfazni"</p>
+                    <p>"O Allah, protect me."</p>
+                `,
+                parents: `
+                    <h3>For Parents</h3>
+                    <p class="arabic">رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا</p>
+                    <p class="transliteration">"Rabbi irhamhuma kama rabbayani saghira"</p>
+                    <p>"My Lord, have mercy upon them as they brought me up [when I was] small."</p>
+                `,
+                children: `
+                    <h3>For Children</h3>
+                    <p class="arabic">رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِن ذُرِّيَّتِي</p>
+                    <p class="transliteration">"Rabbi ij'alni muqima al-salati wa min dhurriyyati"</p>
+                    <p>"My Lord, make me an establisher of prayer, and [many] from my descendants."</p>
+                `,
+                friends: `
+                    <h3>For Friends</h3>
+                    <p class="arabic">اللَّهُمَّ احْفَظْ أَصْحَابِي</p>
+                    <p class="transliteration">"Allahumma ihfaz ashabi"</p>
+                    <p>"O Allah, protect my friends."</p>
+                `,
+                family: `
+                    <h3>For Family</h3>
+                    <p class="arabic">اللَّهُمَّ احْفَظْ أَهْلِي</p>
+                    <p class="transliteration">"Allahumma ihfaz ahli"</p>
+                    <p>"O Allah, protect my family."</p>
+                `
+            };
+            document.getElementById('dua-content').innerHTML = duaContent[type];
+        }
+    </script>
+</body>
+</html>

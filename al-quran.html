@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Quran</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Al-Quran</h1>
+        <p>The Quran is the holy book of Islam, believed to be the word of God as revealed to the Prophet Muhammad (PBUH). It is composed of 114 chapters, known as surahs, which cover various aspects of life, guidance, and spirituality.</p>
+
+        <div class="button-container" id="surah-buttons"></div>
+
+        <div id="surah-content" class="surah-content"></div>
+
+        <div class="center-button">
+            <button class="back" onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const surahButtonsContainer = document.getElementById('surah-buttons');
+            const surahContent = document.getElementById('surah-content');
+            let activeSurah = null;
+
+            const surahNames = [
+                'Al-Fatihah', 'Al-Baqarah', 'Al-Imran', 'An-Nisa', 'Al-Maidah', 'Al-Anam', 'Al-Araf', 'Al-Anfal', 'At-Tawbah', 'Yunus', 
+                'Hud', 'Yusuf', 'Ar-Rad', 'Ibrahim', 'Al-Hijr', 'An-Nahl', 'Al-Isra', 'Al-Kahf', 'Maryam', 'Taha', 
+                'Al-Anbiya', 'Al-Hajj', 'Al-Muminun', 'An-Nur', 'Al-Furqan', 'Ash-Shuara', 'An-Naml', 'Al-Qasas', 'Al-Ankabut', 'Ar-Rum', 
+                'Luqman', 'As-Sajda', 'Al-Ahzab', 'Saba', 'Fatir', 'Ya-Sin', 'As-Saffat', 'Sad', 'Az-Zumar', 'Ghafir', 
+                'Fussilat', 'Ash-Shura', 'Az-Zukhruf', 'Ad-Dukhan', 'Al-Jathiyah', 'Al-Ahqaf', 'Muhammad', 'Al-Fath', 'Al-Hujurat', 'Qaf', 
+                'Adh-Dhariyat', 'At-Tur', 'An-Najm', 'Al-Qamar', 'Ar-Rahman', 'Al-Waqiah', 'Al-Hadid', 'Al-Mujadilah', 'Al-Hashr', 'Al-Mumtahanah', 
+                'As-Saff', 'Al-Jumuah', 'Al-Munafiqun', 'At-Taghabun', 'At-Talaq', 'At-Tahrim', 'Al-Mulk', 'Al-Qalam', 'Al-Haqqah', 'Al-Maarij', 
+                'Nuh', 'Al-Jinn', 'Al-Muzzammil', 'Al-Muddathir', 'Al-Qiyamah', 'Al-Insan', 'Al-Mursalat', 'An-Naba', 'An-Naziat', 'Abasa', 
+                'At-Takwir', 'Al-Infitar', 'Al-Mutaffifin', 'Al-Inshiqaq', 'Al-Buruj', 'At-Tariq', 'Al-Ala', 'Al-Ghashiyah', 'Al-Fajr', 'Al-Balad', 
+                'Ash-Shams', 'Al-Lail', 'Ad-Duha', 'Ash-Sharh', 'At-Tin', 'Al-Alaq', 'Al-Qadr', 'Al-Bayyinah', 'Az-Zalzalah', 'Al-Adiyat', 
+                'Al-Qariah', 'At-Takathur', 'Al-Asr', 'Al-Humazah', 'Al-Fil', 'Quraysh', 'Al-Maun', 'Al-Kawthar', 'Al-Kafirun', 'An-Nasr', 
+                'Al-Masad', 'Al-Ikhlas', 'Al-Falaq', 'An-Nas'
+            ];
+
+            // Generate buttons for all 114 surahs
+            surahNames.forEach((name, index) => {
+                const button = document.createElement('button');
+                button.textContent = `Surah ${name}`;
+                button.onclick = () => toggleSurah(index + 1, name);
+                surahButtonsContainer.appendChild(button);
+            });
+
+            async function toggleSurah(surahNumber, surahName) {
+                if (activeSurah === surahNumber) {
+                    // If the same Surah button is clicked again, hide the content
+                    surahContent.style.display = 'none';
+                    activeSurah = null;
+                    return;
+                }
+
+                try {
+                    const responseArabic = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/ar.alafasy`);
+                    const responseTransliteration = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/en.transliteration`);
+
+                    if (!responseArabic.ok || !responseTransliteration.ok) {
+                        throw new Error(`HTTP error! status: ${responseArabic.status} / ${responseTransliteration.status}`);
+                    }
+
+                    const dataArabic = await responseArabic.json();
+                    const dataTransliteration = await responseTransliteration.json();
+
+                    if (dataArabic.data && dataTransliteration.data) {
+                        let htmlContent = `<p><strong>Surah ${surahName}</strong></p>`;
+                        dataArabic.data.ayahs.forEach((ayah, index) => {
+                            htmlContent += `<p>${ayah.text}</p><p>${dataTransliteration.data.ayahs[index].text}</p>`;
+                        });
+
+                        surahContent.innerHTML = htmlContent;
+                        surahContent.style.display = 'block';
+                        activeSurah = surahNumber;
+                    } else {
+                        surahContent.innerHTML = '<p>Failed to load surah data.</p>';
+                        surahContent.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error fetching surah data:', error);
+                    surahContent.innerHTML = `<p>Error fetching surah data: ${error.message}</p>`;
+                    surahContent.style.display = 'block';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
